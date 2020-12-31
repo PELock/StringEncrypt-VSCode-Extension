@@ -1,0 +1,193 @@
+{
+	"name": "stringencrypt",
+	"displayName": "StringEncrypt",
+	"publisher": "PELock",
+	"description": "Encrypt and hide plain text strings & files contents within your source code in a secure & encrypted form with the help of a polymorphic engine, generating random-looking decryption code every time.",
+	"version": "1.0.1",
+	"icon": "images/icon-stringencrypt-128.png",
+	"homepage": "https://www.stringencrypt.com",
+	"bugs": {
+		"url": "https://www.stringencrypt.com/contact/",
+		"email": "support@pelock.com"
+	  },
+	"engines": {
+		"vscode": "^1.47.0"
+	},
+	"categories": [ "Programming Languages", "Snippets", "Other" ],
+	"keywords": [ "encryption", "crypt", "encrypt", "secure", "protect"],
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:c",
+		"onLanguage:cpp",
+		"onLanguage:csharp",
+		"onLanguage:java",
+		"onLanguage:vb",
+		"onLanguage:ruby",
+		"onLanguage:powershell",
+		"onLanguage:python",
+		"onLanguage:autoit",
+		"onLanguage:haskell",
+		"onLanguage:asm",
+		"onLanguage:delphi",
+		"onLanguage:pascal"
+	],
+	"main": "./extension.js",
+	"contributes": {
+
+		"configuration": {
+
+			"title": "StringEncrypt",
+			"properties": {
+
+				"stringencrypt.activationCode": {
+					"type": "string",
+					"maxLength" : 19,
+					"markdownDescription": "Enter [activation key](https://www.stringencrypt.com/buy/) and remove `demo version` limitations (6 chars max. for label & string):"
+				},
+
+				"stringencrypt.useUnicode": {
+					"type": "boolean",
+					"default": true,
+					"markdownDescription": "Treat input strings as `UNICODE` or `UTF-8` encoded strings (otherwise `ANSI` encoding will be used)"
+				},
+
+				"stringencrypt.newLines": {
+					"markdownDescription": "Encode new lines in strings as:",
+					"type": "string",
+					"default": "LF",
+					"enum": ["LF", "CRLF", "CR" ],
+					"enumDescriptions": [
+						"\\n - Unix Style New Lines (Line Feed - LF)",
+						"\\r\\n - Windows Style New Lines (caRriage Return & Line Feed - CRLF)",
+						"\\r - Mac Style New Lines (caRriage Return - CR)"
+					]
+				},
+
+				"stringencrypt.localVariable": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Declare encrypted string as a **local variable** (if supported by the programming language)"
+				},
+
+				"stringencrypt.minEncryptionCommands": {
+					"type": "number",
+					"default": 5,
+					"minimum": 1,
+					"maximum": 50,
+					"markdownDescription": "Minimum number of the encryption commands (max. 3 in the `demo version`, max. 50 in `full version`):"
+				},
+
+				"stringencrypt.maxEncryptionCommands": {
+					"type": "number",
+					"default": 10,
+					"minimum": 1,
+					"maximum": 50,
+					"markdownDescription": "Maximum number of the encryption commands (max. 3 in the `demo version`, max. 50 in `full version`):"
+				},
+
+
+				"stringencrypt.includeUsageExample": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Generate additional usage example in every generated code snippet e.g. `alert(encryptedString);`"
+				}
+
+			}
+		},
+
+		"commands": [
+			{
+				"command": "stringencrypt.stringEncryptInsert",
+				"title": "Insert Encrypted String"
+			},
+
+			{
+				"command": "stringencrypt.stringEncryptReplace",
+				"title": "Encrypt Selected String"
+			},
+
+			{
+				"command": "stringencrypt.stringEncryptInsertFile",
+				"title": "Insert Encrypted File"
+			},
+
+			{
+				"command": "stringencrypt.checkActivationCode",
+				"title": "StringEncrypt: Check Activation Code Status and Demo or Full Version Limitations"
+			},
+
+			{
+				"command": "stringencrypt.getGeneralInfo",
+				"title": "StringEncrypt: Check Version & Get List of Supported Programming Languages"
+			}
+		],
+
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorTextFocus",
+					"command": "stringencrypt.stringEncryptInsert",
+					"group": "StringEncryptGroup@1"
+				},
+
+				{
+					"when": "editorTextFocus && editorHasSelection",
+					"command": "stringencrypt.stringEncryptReplace",
+					"group": "StringEncryptGroup@1"
+				},
+
+				{
+					"when": "editorTextFocus",
+					"command": "stringencrypt.stringEncryptInsertFile",
+					"group": "StringEncryptGroup@1"
+				}
+			]
+		},
+
+		"keybindings": [
+			{
+				"command": "stringencrypt.stringEncryptInsert",
+				"key": "ctrl+alt+i",
+				"mac": "cmd+i",
+				"when": "editorTextFocus"
+			},
+
+			{
+				"command": "stringencrypt.stringEncryptReplace",
+				"key": "ctrl+alt+r",
+				"mac": "cmd+r",
+				"when": "editorTextFocus && editorHasSelection"
+			},
+
+			{
+				"command": "stringencrypt.stringEncryptInsertFile",
+				"key": "ctrl+alt+f",
+				"mac": "cmd+f",
+				"when": "editorTextFocus"
+			}
+
+		  ]
+
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^7.0.2",
+		"@types/node": "^13.11.0",
+		"@types/vscode": "^1.47.0",
+		"eslint": "^6.8.0",
+		"glob": "^7.1.6",
+		"mocha": "^7.1.2",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.3.0"
+	},
+	"dependencies": {
+		"axios": "^0.19.2",
+		"querystring": "^0.2.0"
+	}
+}
