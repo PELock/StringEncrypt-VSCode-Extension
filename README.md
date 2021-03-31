@@ -1,5 +1,7 @@
 # StringEncrypt Extension for Visual Studio Code
 
+[![Build Status](https://travis-ci.com/PELock/StringEncrypt-VSCode-Extension.svg?branch=main)](https://travis-ci.com/PELock/StringEncrypt-VSCode-Extension)
+
 Encrypt and hide plain text strings & files contents within your source code in a secure & encrypted form with the help of a polymorphic engine, generating random-looking decryption code every time.
 
 https://www.stringencrypt.com
